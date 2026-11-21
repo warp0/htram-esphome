@@ -22,10 +22,12 @@ owns the sensors, the panel and the buttons.
   quality in normal conditions.
 - **An alarm clock** that rings from the device, not from an automation.
 - **Air raid alerts & threat tracking**: Real-time alerts powered by
-  [JAAM (jaam.net.ua)](https://jaam.net.ua) over its Fusion WebSocket API
-  (`ws.jaam.net.ua/data_fusion_v1`), with a persistent status icon, threat
-  sounds, and blinking yellow/red front LEDs. The five room profiles use the
-  Ivano-Frankivsk region (JAAM region ID 13).
+  [JAAM (jaam.net.ua)](https://jaam.net.ua) over its public Service WebSocket
+  API (`ws.jaam.net.ua/data_service_v1`) — deliberately not through Home
+  Assistant, which may be restarting exactly when it matters. Displays
+  dedicated icons for threat types (missiles, drones, ballistic, guided aerial
+  bombs / KAB, reconnaissance UAVs) and plays RTTTL audio alerts. Data:
+  [JAAM (jaam.net.ua)](https://jaam.net.ua).
 - **Five room profiles**: Living room, bedroom, office, kids' room 1 and kids'
   room 2. Each has a room-specific Home Assistant identity and OTA image.
 - **Room-aware OTA from this fork**: Each profile downloads its matching ESP32
