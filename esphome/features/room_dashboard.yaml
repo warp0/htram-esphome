@@ -427,13 +427,17 @@ script:
           #else
           const bool real_wifi_connected = true;
           #endif
-          const bool wifi_connected = indicator_mode < 0 ? real_wifi_connected : indicator_mode == 1;
+          const bool wifi_connected = indicator_mode < 0
+                                          ? ((id(sim_override_net) != -1) ? (id(sim_override_net) == 1)
+                                                                           : real_wifi_connected)
+                                          : indicator_mode == 1;
           const bool internet_connected = indicator_mode < 0
-                                              ? id(internet_last_sync_ms) != 0 &&
+                                              ? wifi_connected && id(internet_last_sync_ms) != 0 &&
                                                     (millis() - id(internet_last_sync_ms)) < 1800000u
                                               : indicator_mode == 1;
-          const bool jaam_connected = indicator_mode < 0 ? id(jaam)->connected()
-                                                         : indicator_mode == 1;
+          const bool jaam_connected = indicator_mode < 0
+                                          ? wifi_connected && id(jaam)->connected()
+                                          : indicator_mode == 1;
           const float battery_level = indicator_mode == 1 ? 100.0f :
                                       (indicator_mode == 0 ? NAN : id(sensor_batt_level).state);
           const bool usb_powered = indicator_mode < 0 ? id(sensor_usb).state
